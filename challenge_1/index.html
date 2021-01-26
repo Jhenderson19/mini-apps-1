@@ -1,2 +1,47 @@
-
-
+<html>
+  <head>
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div id="title"><h1>Tic-Tac-Toe!</h1></div>
+    <div id="winstate"></div>
+    <table id='table'>
+      <tr>
+        <td>
+          <button id='00' class='move' onclick="makeMove(0, 0)">_</button>
+        </td>
+        <td>
+          <button id='01' class='move' onclick="makeMove(0, 1)">_</button>
+        </td>
+        <td>
+          <button id='02' class='move' onclick="makeMove(0, 2)">_</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button id='10' class='move' onclick="makeMove(1, 0)">_</button>
+        </td>
+        <td>
+          <button id='11' class='move' onclick="makeMove(1, 1)">_</button>
+        </td>
+        <td>
+          <button id='12' class='move' onclick="makeMove(1, 2)">_</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button id='20' class='move' onclick="makeMove(2, 0)">_</button>
+        </td>
+        <td>
+          <button id='21' class='move' onclick="makeMove(2, 1)">_</button>
+        </td>
+        <td>
+          <button id='22' class='move' onclick="makeMove(2, 2)">_</button>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <button onclick="reset()">RESET</button>
+    </p>
+  </body>
+</html>
