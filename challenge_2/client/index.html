@@ -6,12 +6,13 @@
   <body onload="onload()">
     <form id="inputForm" >
       <label for="json">JSON to Convert:</label><br>
-      <textarea id="json" name="json" rows="25" cols="80" style="resize: vertical;"></textarea><br>
+      <input type="file" id="uploaded" accept="application/json">
       <button type="submit" id="submit">Submit!</button>
     </form>
 
     <div>CSV Results - <br>
-      <textarea readonly id='results' rows="10" cols="80" style="resize: vertical;"></textarea>
+      <textarea readonly id='results' rows="10" cols="80" style="resize: vertical;"></textarea><br>
+      <a href="" id="download">Download Latest CSV</a>
     </div>
   </body>
 </html>

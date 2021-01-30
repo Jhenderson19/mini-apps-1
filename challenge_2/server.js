@@ -1,41 +1,60 @@
 //define server
 var express = require('express');
-var cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 var app = express();
 var port = 42069;
 
+
+//Middleware
+var cors = require('cors');
+var multipart = require('parse-multipart');
 var corsOptions = {
   "origin": '*',
   "allowedHeaders": 'Content-Type,Content-type',
 }
-
 app.use(cors(corsOptions));
 app.use(express.json());
 
 
 //define routes
 app.post('/convert', (req, res) => {
-
   try {
-    var data = req.body.data;
-    if (data[data.length - 1] === ';') {
-      data = data.slice(0, -1);
-    }
-    var parsedData = JSON.parse(data);
+    var file = Buffer.alloc(0);
 
-    res.status(200).send(toCSV(parsedData));
+    req.on('data', (chunk) => {
+      file = Buffer.concat([file, chunk]);
+    }).on('end', () => {
+      var csvStr = toCSV(JSON.parse(trimBufferToString(file)))
+      res.status(200).send(csvStr);
+
+      fs.writeFile('parsed.csv', csvStr, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log('wrote to file csv');
+        }
+      });
+    });
 
   } catch (error) {
-
+    console.log(error);
     res.status(400).send('ERROR: INVALID JSON SYNTAX');
 
   }
 });
 
+app.get('/latest.csv', (req, res) => {
+  res.sendFile(path.join(__dirname,'parsed.csv'), (err) => {
+    console.log(err);
+  });
+})
+
 //init server
 app.listen(port, () => {
   console.log(`CSV Generator listening on at http://localhost:${port}`);
 })
+
 
 
 //CONVERSION LOGIC
@@ -82,4 +101,20 @@ function dfEach(obj, cb) {
   obj.children.forEach((child) => {
     dfEach(child, cb);
   })
+}
+
+//TRIM BUFFER
+function trimBufferToString(buffer) {
+  var str = buffer.toString('utf-8');
+
+
+  str = str.slice(str.indexOf('\n\r\n') + 2 );
+
+
+  str = str.slice(0, str.indexOf('------WebK') - 2);
+
+  if (str[str.length - 1] === ';') {
+    str = str.slice(0, str.length - 1);
+  }
+  return str;
 }
