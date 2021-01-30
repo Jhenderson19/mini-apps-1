@@ -1,2 +1,17 @@
+<html>
+  <title>CSV GENERATOR</title>
+  <head>
+    <script src='app.js'></script>
+  </head>
+  <body onload="onload()">
+    <form id="inputForm" >
+      <label for="json">JSON to Convert:</label><br>
+      <textarea id="json" name="json" rows="25" cols="80" style="resize: vertical;"></textarea><br>
+      <button type="submit" id="submit">Submit!</button>
+    </form>
 
-
+    <div>CSV Results - <br>
+      <textarea readonly id='results' rows="10" cols="80" style="resize: vertical;"></textarea>
+    </div>
+  </body>
+</html>
