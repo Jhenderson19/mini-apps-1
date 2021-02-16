@@ -151,6 +151,8 @@ var makeMove = function(x, y) {
 
     if(board.checkWin()) {
       displayWin(board.getActivePlayer());
+    } else if(board.tied()) {
+      displayDraw();
     } else {
       board.nextTurn();
     }
@@ -161,14 +163,15 @@ var makeMove = function(x, y) {
 
 }
 
+var displayDraw = function(player) {
+  var winstr = 'Draw!';
+
+  console.log(winstr);
+  document.getElementById('winstate').innerHTML = winstr;
+}
 
 var displayWin = function(player) {
-  var winstr = '';
-  if(board.tied()) {
-    winstr = 'Draw!';
-  } else {
-    winstr = `${player.name.toUpperCase()} WINS!`;
-  }
+  var winstr = `${player.name.toUpperCase()} WINS!`;
 
   console.log(winstr);
   document.getElementById('winstate').innerHTML = winstr;
