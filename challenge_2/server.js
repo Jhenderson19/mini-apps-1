@@ -107,10 +107,7 @@ function dfEach(obj, cb) {
 function trimBufferToString(buffer) {
   var str = buffer.toString('utf-8');
 
-
   str = str.slice(str.indexOf('\n\r\n') + 2 );
-
-
   str = str.slice(0, str.indexOf('------WebK') - 2);
 
   if (str[str.length - 1] === ';') {
