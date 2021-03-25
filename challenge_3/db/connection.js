@@ -1,10 +1,10 @@
 var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'miniapps1_challenge3_transactions'
-});
+
+var dbLogin = require('dbConfig.js');
+dbLogin.host = 'localhost';
+dbLogin.database = 'miniapps1_challenge3_transactions';
+
+var connection = mysql.createConnection(dbLogin);
 
 connection.connect();
 
