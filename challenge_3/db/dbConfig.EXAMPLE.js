@@ -1,1 +1,1 @@
-module.exports = {user: 'root', password: ''};
+module.exports = {host: 'localhost', user: 'root', password: ''};
