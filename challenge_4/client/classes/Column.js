@@ -24,6 +24,9 @@ class Column {
   topChip() {
     return this.values[this.values.length - 1];
   }
+  full() {
+    return this.values.length >= this.max;
+  }
 }
 
 export default Column;

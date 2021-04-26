@@ -1,7 +1,7 @@
 class TurnTracker {
-  constructor(players = ['Red', 'Black']) {
+  constructor(players = ['Red', 'Black'], randomStart = true) {
     this.players = players;
-    this.currentPlayer = 0;
+    randomStart ? this.currentPlayer = Math.floor(Math.random() * players.length) : this.currentPlayer = 0;
   }
   nextPlayer() {
     this.currentPlayer = (this.currentPlayer + 1 ) % this.players.length;

@@ -1,4 +1,5 @@
 import Column from './Column.js';
+import TurnTracker from './TurnTracker.js';
 
 class Board {
   constructor() {
@@ -13,6 +14,7 @@ class Board {
     ];
     this.winner = false;
     this.winCondition = 4;
+    this.tracker = new TurnTracker();
   }
   renderableBoard() {
     console.log('renderable board generating');
@@ -20,18 +22,27 @@ class Board {
     for(let i = this.columns[0].max - 1; i >= 0; i--) {
       renderBoard.push([]);
       for(let j = 0; j < this.columns.length; j++) {
-        renderBoard[renderBoard.length - 1].push(this.columns[j].chipAt(i));
+        var chip = this.columns[j].chipAt(i);
+        if (chip) {
+          renderBoard[renderBoard.length - 1].push(chip);
+        } else {
+          renderBoard[renderBoard.length - 1].push('⁜⁜⁜⁜⁜');
+        }
       }
     }
     return renderBoard;
   }
-  addChip(val, col) {
-    var x = this.columns[col].addChip(val);
-    this.winner = this.detectWin(col);
-    return x;
+  addChip(col) {
+    if(!this.winner) {
+      var x = this.columns[col].addChip(this.tracker.getCurrentPlayer());
+      x ? this.tracker.nextPlayer() : null;
+      this.winner = this.detectWin(col);
+      return x;
+    }
+    return false;
   }
   detectWin(col) {
-    return this.detectVerticalWin(col) || this.detectHorizontalWin(col) || this.detectDiagonalWin(col);
+    return this.detectVerticalWin(col) || this.detectHorizontalWin(col) || this.detectDiagonalWin(col) || this.detectTie();
   }
   detectVerticalWin(col) {
     var column = this.columns[col];
@@ -129,6 +140,14 @@ class Board {
     } else {
       return false;
     }
+  }
+  detectTie() {
+    if( this.columns.reduce((acc, column) => {
+      return acc && column.full();
+    }, true) ) {
+      return 'tie'
+    }
+    return false;
   }
 }
 

@@ -1,0 +1,12 @@
+.Red {
+  color: red;
+  background-color: red;
+}
+
+.Black {
+  color: black;
+  background-color: black;
+}
+.chip {
+  border: 3px solid rgb(80, 142, 235);
+}

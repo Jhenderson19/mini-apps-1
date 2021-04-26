@@ -1,10 +1,11 @@
 import React from 'react';
 import Board from '../classes/Board.js';
-import TurnTracker from '../classes/TurnTracker.js';
 import AddChipButton from './AddChipButton.jsx';
+import css from './styles/app.css';
+import css1 from './styles/chips.css';
+
 
 var board = new Board();
-var tracker = new TurnTracker();
 
 class App extends React.Component{
   constructor(props) {
@@ -14,23 +15,30 @@ class App extends React.Component{
       winner: false
     }
   }
+  componentDidMount() {
+    this.stageUpdate();
+  }
   stageUpdate() {
     this.setState({viewboard: board.renderableBoard(), winner: board.winner});
-    tracker.nextPlayer();
   }
   render() {
     return (
         <div>
           <div>
-            {this.state.winner ? <h1>{this.state.winner + ' Wins! Congrats!'}</h1> : tracker.getCurrentPlayer()+`'s turn.`}
+            {
+              !this.state.winner ? board.tracker.getCurrentPlayer()+`'s turn.` :
+              this.state.winner !== 'tie' ?
+                <h1>{this.state.winner + ' Wins! Congrats!'}</h1> :
+                <h1>Tie Game! Better Luck Next Time...</h1>
+            }
           </div>
         <table>
           <tbody>
-            {board.renderableBoard().map((row) => {
+            {this.state.viewboard.map((row) => {
               return (
                 <tr>
                   {row.map((cell) => {
-                    return (<td>{cell}</td>);
+                    return (<td className={`chip ${cell}`}>{cell}</td>);
                   })}
                 </tr>
               )
@@ -45,7 +53,6 @@ class App extends React.Component{
                         stageUpdate: this.stageUpdate.bind(this)
                       }}
                       index={value}
-                      player={tracker.getCurrentPlayer()}
                     />
                   </td>
                 )
