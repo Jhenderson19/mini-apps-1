@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 
-var dbLogin = require('dbConfig.js');
+var dbLogin = require('./dbConfig.js');
 dbLogin.database = 'miniapps1_challenge3_transactions';
 
 var connection = mysql.createConnection(dbLogin);

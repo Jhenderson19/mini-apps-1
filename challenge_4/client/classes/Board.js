@@ -17,7 +17,6 @@ class Board {
     this.tracker = new TurnTracker();
   }
   renderableBoard() {
-    console.log('renderable board generating');
     var renderBoard = [];
     for(let i = this.columns[0].max - 1; i >= 0; i--) {
       renderBoard.push([]);
@@ -70,15 +69,15 @@ class Board {
         var check = (col) => { return col > 0; };
         var start = col - 1;
         var limit = (i) => { return i >= 0; };
-        var increment = (i) => { return i - 1; };
+        var nextNum = (i) => { return i - 1; };
       } else {
         var check = (col) => { return col < this.columns.length - 1; };
         var start = col + 1;
         var limit = (i) => { return i < this.columns.length; };
-        var increment = (i) => { return i + 1; };
+        var nextNum = (i) => { return i + 1; };
       }
       if(check(col)) {
-        for(let i = start; limit(i); i = increment(i)) {
+        for(let i = start; limit(i); i = nextNum(i)) {
           if(this.columns[i].chipAt(height) === topChip) {
             total++;
           } else {
